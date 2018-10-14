@@ -1,4 +1,3 @@
-
 #!/usr/bin/python
 
 import serial
@@ -21,7 +20,7 @@ def mycheck(st):
 
 
 
-ser_com = serial.Serial('COM3',38400)
+ser_com = serial.Serial('/dev/ttyUSB0',38400)
 sleep(.300)
 
 END_OF_PACKET = 15
@@ -32,16 +31,13 @@ STARTUP_PACKET_ID = 0x74
 xx = [0] * BUF_SIZE
 
 def set_relay():
-    ser_relay = serial.Serial('COM7',9600)
-    ser_relay.flush()
+    global ser
     sleep(.5)
     print "relay on"
-    ser_relay.write('a')
-    ser_relay.flush()
-    ser_relay.write('a')
-    ser_relay.flush()
+    ser_com.rts=0
     sleep(.300)
-    ser_relay.close()
+    ser_com.rts=1
+    sleep(.05)
 
 def sendstart():
     global ser_com

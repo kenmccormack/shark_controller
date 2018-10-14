@@ -95,20 +95,36 @@ sendstart()
 #ser_com.write(bytearray([0x05, 0xa0, 0xda]))
 #sleep(.02)
 
-direction = 200
-speed = 800
-vd = 5
+direction = 512
+speed = 512
+vd = 2
+
+
+for ii in range(200):
+    sendcontrol(direction, speed)
+    sleep(.01)
+
+direction = 1023
+speed = 500
+vd = 2
+
+
+print "unclocked"
+   
 while True:
 
-    speed = direction
+    
     sendcontrol(direction, speed)
     sleep(.01)
    
-    direction  = direction + vd
-    print "dir: %d, speed: %d" % (direction,speed)
-    if direction > 1000:
-        vd = vd  * -1
+    if False:
+        speed  = speed + vd
+        print "dir: %d, speed: %d" % (direction,speed)
+        if speed > 1024:
+            speed = 1024
+            vd = vd  * -1
 
-    if direction < 200:
-        vd = vd * -1
-    
+        if speed < 0:
+            speed = 0 
+            vd = vd * -1
+        
